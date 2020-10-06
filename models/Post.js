@@ -5,8 +5,13 @@ class Post {
     author = ObjectId(),
     title,
     description,
-    street,
-    city,
+    gallery = [],
+    price,
+    status,
+    address,
+    bedrooms,
+    bathrooms,
+    garages,
   }) {
     return {
       createdAt,
@@ -14,8 +19,13 @@ class Post {
       author,
       title,
       description,
-      street,
-      city,
+      gallery,
+      price,
+      status,
+      address,
+      bedrooms,
+      bathrooms,
+      garages,
     };
   }
 }

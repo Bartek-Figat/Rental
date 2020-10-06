@@ -5,6 +5,7 @@ class User {
     useremail,
     dateAdded = new Date(),
     posts = [],
+    lastLoggedIn = new Date(),
   }) {
     return {
       username,
@@ -12,6 +13,7 @@ class User {
       useremail,
       dateAdded,
       posts,
+      lastLoggedIn,
     };
   }
 }

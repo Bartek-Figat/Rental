@@ -1,7 +1,7 @@
 require("dotenv").config();
 const CryptoJS = require("crypto-js");
 const { ObjectID } = require("mongodb");
-const { findOneUser } = require("../db/db.controllers");
+const { findOneUser, findOneAndUpdate } = require("../db/db.controllers");
 const jwt = require("jsonwebtoken");
 const { secret } = process.env;
 
@@ -24,6 +24,10 @@ const createLoginCredentials = async (credentials, req, res, next) => {
         .status(401)
         .json({ error: "You have entered an invalid email or password" });
     } else {
+      await findOneAndUpdate(
+        { useremail },
+        { $set: { lastLoggedIn: new Date() } }
+      );
       return {
         accessToken: jwt.sign(
           {

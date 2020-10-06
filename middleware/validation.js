@@ -77,12 +77,41 @@ const postValidatioin = async (req, res, next) => {
         allowEmpty: false,
       },
     },
-    street: {
+    images: {
+      presence: {
+        allowEmpty: false,
+      },
+      length: {
+        minimum: 1,
+        maximum: 6,
+      },
+    },
+    price: {
       presence: {
         allowEmpty: false,
       },
     },
-    city: {
+    status: {
+      presence: {
+        allowEmpty: false,
+      },
+    },
+    address: {
+      presence: {
+        allowEmpty: false,
+      },
+    },
+    bedrooms: {
+      presence: {
+        allowEmpty: false,
+      },
+    },
+    bathrooms: {
+      presence: {
+        allowEmpty: false,
+      },
+    },
+    garages: {
       presence: {
         allowEmpty: false,
       },

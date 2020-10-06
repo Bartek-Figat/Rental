@@ -48,15 +48,16 @@ userRouter.post(
 userRouter.get("/admin", protectedRoutes, async (req, res, next) => {
   try {
     const user = await findOneUser({ _id: ObjectID(req.user.data.id) });
-    console.log(user._id);
     const userPost = await findAllPosts({ author: ObjectID(user._id) });
-    const v = userPost.map((item) => {
+    const allUserPosts = userPost.map((item) => {
       return item;
     });
 
-    console.log(v);
-
-    res.json({ user, userPost });
+    if (allUserPosts.length === 0) {
+      res.json({ msg: "No post added" });
+    } else {
+      res.json({ allUserPosts });
+    }
   } catch (error) {
     console.log(`Admin Error:  ${error}`);
   }
