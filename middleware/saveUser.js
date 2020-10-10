@@ -5,6 +5,7 @@ const { sign } = require("jsonwebtoken");
 const { User } = require("../models/User");
 const { secret } = process.env;
 const saveUser = async (req, res, next) => {
+  console.log(req.body);
   const { username, useremail, userpassword } = req.body;
 
   const query = {

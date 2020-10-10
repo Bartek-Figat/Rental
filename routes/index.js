@@ -18,12 +18,23 @@ const {
   insertUser,
   findOneUser,
   findAllUsers,
+  updateOneUsers,
+  findOneAndUpdate,
+} = require("../db/db.user.controllers");
+
+const {
   insertPost,
   findOnePost,
   findAllPosts,
-  updateOneUsers,
-  findOneAndUpdate,
-} = require("../db/db.controllers");
+} = require("../db/db.post.controllers");
+
+const {
+  insertJwt,
+  findOneJwt,
+  findAllJwt,
+} = require("../db/db.jwt_blacklist.controllers");
+
+const { Jwt } = require("../models/JwtBlackList");
 
 module.exports = {
   saveUser,
@@ -43,4 +54,8 @@ module.exports = {
   updateOneUsers,
   findOneAndUpdate,
   postValidatioin,
+  insertJwt,
+  findOneJwt,
+  findAllJwt,
+  Jwt,
 };

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const CryptoJS = require("crypto-js");
 const { ObjectID } = require("mongodb");
-const { findOneUser, findOneAndUpdate } = require("../db/db.controllers");
+const { findOneUser, findOneAndUpdate } = require("../db/db.user.controllers");
 const jwt = require("jsonwebtoken");
 const { secret } = process.env;
 

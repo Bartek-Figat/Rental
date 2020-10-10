@@ -3,6 +3,8 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
+const expressip = require("express-ip");
+const compression = require("compression");
 const { userRouter } = require("./routes/user.routes");
 const { postRouter } = require("./routes/post.routes");
 const initialize = () => {
@@ -13,6 +15,8 @@ const initialize = () => {
   server.use(morgan("dev"));
   server.use(cors({ credentials: true, origin: "http://localhost:3000" }));
   server.use(helmet());
+  server.use(compression());
+  server.use(expressip().getIpInfoMiddleware);
   server.use(userRouter);
   server.use(postRouter);
 

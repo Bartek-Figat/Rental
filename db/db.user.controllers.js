@@ -22,20 +22,6 @@ const insertUser = async (doc) => {
   }
 };
 
-const insertPost = async (doc) => {
-  const client = new MongoClient(dbURI, dbOptions);
-  try {
-    await client.connect();
-    const database = client.db("test");
-    const collection = database.collection("new_post");
-    return await collection.insertOne(doc);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await client.close();
-  }
-};
-
 const insertManyUsers = async (docs) => {
   const client = new MongoClient(dbURI, dbOptions);
   try {
@@ -61,33 +47,6 @@ const findOneUser = async (query) => {
     console.log(error);
   } finally {
     await client.close();
-  }
-};
-
-const findOnePost = async (query) => {
-  const client = new MongoClient(dbURI, dbOptions);
-  try {
-    await client.connect();
-    const database = client.db("test");
-
-    const collection = database.collection("new_post");
-    return await collection.findOne(query);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await client.close();
-  }
-};
-
-const findAllPosts = async (query, options) => {
-  const client = new MongoClient(dbURI, dbOptions);
-  try {
-    await client.connect();
-    const database = client.db("test");
-    const collection = database.collection("new_post");
-    return collection.find(query, options).limit(3).toArray();
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -197,8 +156,5 @@ module.exports = {
   deleteOneUser,
   deleteManyUser,
   userPagination,
-  insertPost,
-  findOnePost,
-  findAllPosts,
   findOneAndUpdate,
 };

@@ -1,4 +1,6 @@
 const express = require("express");
+const { lookup } = require("geoip-lite");
+
 const { ObjectID } = require("mongodb");
 const {
   saveUser,
@@ -11,13 +13,14 @@ const {
   protectedRoutes,
   findOneUser,
   findAllPosts,
+  Jwt,
+  insertJwt,
 } = require("./index");
 const { Router } = express;
 const userRouter = Router();
 
 userRouter.post(
   "/register",
-  createAccountLimiter,
   registerValidatioin,
   saveUser,
   async (req, res, next) => {
@@ -60,6 +63,18 @@ userRouter.get("/admin", protectedRoutes, async (req, res, next) => {
     }
   } catch (error) {
     console.log(`Admin Error:  ${error}`);
+  }
+});
+
+userRouter.get("/logout", async (req, res, next) => {
+  try {
+    const token = req.headers["x-access-token"] || req.headers["autorization"];
+    const blackList = Jwt.createJwtBlackList({ jwtBlackList: token });
+
+    await insertJwt(blackList);
+    res.json({ msg: "success" });
+  } catch (error) {
+    console.log(`Login Error:  ${error}`);
   }
 });
 
