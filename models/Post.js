@@ -2,7 +2,7 @@ class Post {
   static createPost({
     createdAt = new Date(),
     location,
-    author = ObjectId(),
+    author,
     title,
     description,
     gallery = [],

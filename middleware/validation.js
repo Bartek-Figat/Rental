@@ -1,17 +1,18 @@
 const validate = require("validate.js");
 
-const registerValidatioin = async (req, res, next) => {
+const registerValidation = async (req, res, next) => {
   const constraints = {
     username: {
       presence: {
         allowEmpty: false,
+        message: '^Name required',
       },
     },
     userpassword: {
       presence: true,
       length: {
         minimum: 6,
-        message: "must be at least 6 characters",
+        message: '^Password must be at least 6 characters',
       },
     },
     useremail: {
@@ -32,17 +33,19 @@ const registerValidatioin = async (req, res, next) => {
   }
 };
 
-const loginValidatioin = async (req, res, next) => {
+const loginValidation = async (req, res, next) => {
   const constraints = {
     userpassword: {
       presence: true,
       length: {
-        minimum: 5,
-        message: "must be at least 6 characters",
+        minimum: 6,
+        message: '^Password must be at least 6 characters',
       },
     },
     useremail: {
-      email: true,
+      email: {
+        message: "^Email doesn't look like a valid email",
+      },
     },
   };
 
@@ -59,7 +62,7 @@ const loginValidatioin = async (req, res, next) => {
   }
 };
 
-const postValidatioin = async (req, res, next) => {
+const postValidation = async (req, res, next) => {
   const constraints = {
     location: {
       presence: {
@@ -132,7 +135,7 @@ const postValidatioin = async (req, res, next) => {
 };
 
 module.exports = {
-  registerValidatioin,
-  loginValidatioin,
-  postValidatioin,
+  registerValidation,
+  loginValidation,
+  postValidation,
 };

@@ -6,6 +6,8 @@ class User {
     dateAdded = new Date(),
     posts = [],
     lastLoggedIn = new Date(),
+    authToken = null,
+    isAuthenticated = false
   }) {
     return {
       username,
@@ -14,6 +16,8 @@ class User {
       dateAdded,
       posts,
       lastLoggedIn,
+      authToken,
+      isAuthenticated
     };
   }
 }

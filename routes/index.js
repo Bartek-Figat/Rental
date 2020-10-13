@@ -1,10 +1,6 @@
 const { saveUser } = require("../middleware/saveUser");
 const { preparePost } = require("../middleware/preparePost");
-const {
-  registerValidatioin,
-  loginValidatioin,
-  postValidatioin,
-} = require("../middleware/validation");
+const { registerValidation, loginValidation, postValidation } = require('../middleware/validation');
 const { protectedRoutes } = require("../middleware/protectedRoutes");
 const {
   createLoginCredentials,
@@ -13,6 +9,9 @@ const {
   createAccountLimiter,
   loginAccountLimiter,
 } = require("../middleware/reqLimit");
+
+
+const { TokenExpired } = require('../middleware/checkToken');
 
 const {
   insertUser,
@@ -38,8 +37,8 @@ const { Jwt } = require("../models/JwtBlackList");
 
 module.exports = {
   saveUser,
-  registerValidatioin,
-  loginValidatioin,
+  registerValidation,
+  loginValidation,
   createLoginCredentials,
   createAccountLimiter,
   loginAccountLimiter,
@@ -53,9 +52,10 @@ module.exports = {
   findAllPosts,
   updateOneUsers,
   findOneAndUpdate,
-  postValidatioin,
+  postValidation,
   insertJwt,
   findOneJwt,
   findAllJwt,
   Jwt,
+  TokenExpired,
 };

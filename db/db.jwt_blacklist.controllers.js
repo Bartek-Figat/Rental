@@ -2,7 +2,6 @@ require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
 const { dbURI } = process.env;
-
 const dbOptions = {
   useUnifiedTopology: true,
   useNewUrlParser: true,
@@ -28,7 +27,7 @@ const findOneJwt = async (query) => {
     await client.connect();
     const database = client.db("test");
 
-    const collection = database.collection("jwt_blacklist");
+    const collection = database.collection('jwt_blacklist');
     return await collection.findOne(query);
   } catch (error) {
     console.log(error);
@@ -49,8 +48,23 @@ const findAllJwt = async (query, options) => {
   }
 };
 
+const deleteOneJwt = async (query) => {
+  const client = new MongoClient(dbURI, dbOptions);
+  try {
+    await client.connect();
+    const database = client.db('test');
+    const collection = database.collection('jwt_blacklist');
+    return await collection.deleteOne(query);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await client.close();
+  }
+};
+
 module.exports = {
   insertJwt,
   findOneJwt,
   findAllJwt,
+  deleteOneJwt,
 };

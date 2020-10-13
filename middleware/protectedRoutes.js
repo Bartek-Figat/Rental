@@ -1,30 +1,40 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { findAllJwt } = require("../db/db.jwt_blacklist.controllers");
+const { findAllJwt, insertJwt } = require("../db/db.jwt_blacklist.controllers");
+const { Jwt } = require("../models/JwtBlackList")
 const { secret } = process.env;
 
 const protectedRoutes = async (req, res, next) => {
-  //get token from the header
-  const token = req.headers["x-access-token"] || req.headers["autorization"];
-
-  const orginalToken = [];
-  orginalToken.push(token);
-
-  const tokenFromBlackList = await findAllJwt({});
-  const compareToken = tokenFromBlackList.map((tokens) => {
-    return tokens.jwtBlackList;
-  });
-
-  const findCommonElements = (arr1, arr2) => {
-    return arr1.some((item) => arr2.includes(item));
-  };
-
-  if (!token || findCommonElements(compareToken, orginalToken) === true)
-    return res.status(401).json({ error: "Access denied" });
 
   try {
-    const decoded = jwt.verify(token, secret);
-    req.user = decoded;
+    const token = req.headers["x-access-token"] || req.headers["authorization"];
+
+    const originalToken = [];
+    originalToken.push(token);
+  
+    const tokenFromBlackList = await findAllJwt({});
+    const compareToken = tokenFromBlackList.map((tokens) => {
+      return tokens.jwtBlackList;
+    });
+  
+    const findCommonElements = (arr1, arr2) => {
+      return arr1.some((item) => arr2.includes(item));
+    };
+  
+    if (!token || findCommonElements(compareToken, originalToken) === true)
+      return res.status(401).json({ error: "Access denied" });
+    jwt.verify(token, secret,async (err, decoded) => {
+      if (err) {
+        console.log(err)
+          if (findCommonElements(compareToken, originalToken) === false){
+            const blackList = Jwt.createJwtBlackList({ jwtBlackList: token });
+            await insertJwt(blackList);
+            res.status(401).json({ error: "Access denied Error" });
+          }
+      }else{
+        req.user = decoded;
+      }
+    });
     next();
   } catch (error) {
     console.log(error);
