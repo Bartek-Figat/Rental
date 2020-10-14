@@ -1,7 +1,6 @@
 require("dotenv").config({ path: ".env" });
 const sanitize = require("mongo-sanitize");
-const CryptoJS = require("crypto-js");
-const { findOneUser } = require("../db/db.user.controllers");
+const CryptoJS = require('crypto-js');
 const { sign } = require("jsonwebtoken");
 const { User } = require("../models/User");
 const { secret } = process.env;

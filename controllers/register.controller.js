@@ -1,7 +1,12 @@
+const { validationResult } = require('express-validator');
 const { insertUser, findOneUser } = require('../routes/index');
 const { sendEmailVerification } = require('../controllers/email.controller');
 const register = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     const { useremail } = req.user;
     const userEmailFound = await findOneUser({ useremail });
     if (userEmailFound) {

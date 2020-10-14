@@ -1,66 +1,17 @@
 const validate = require("validate.js");
+const { check, validationResult } = require('express-validator');
 
-const registerValidation = async (req, res, next) => {
-  const constraints = {
-    username: {
-      presence: {
-        allowEmpty: false,
-        message: '^Name required',
-      },
-    },
-    userpassword: {
-      presence: true,
-      length: {
-        minimum: 6,
-        message: '^Password must be at least 6 characters',
-      },
-    },
-    useremail: {
-      email: true,
-    },
-  };
 
-  try {
-    const value = await validate(req.body, constraints);
+const registerValidation = [
+  check(`username`, 'Name is required').not().isEmpty(),
+  check(`useremail`, 'Please fill out a valid email address').isEmail(),
+  check(`userpassword`, 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
+];
 
-    if (value) {
-      res.status(422).json({ errors: value });
-    } else {
-      next();
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const loginValidation = async (req, res, next) => {
-  const constraints = {
-    userpassword: {
-      presence: true,
-      length: {
-        minimum: 6,
-        message: '^Password must be at least 6 characters',
-      },
-    },
-    useremail: {
-      email: {
-        message: "^Email doesn't look like a valid email",
-      },
-    },
-  };
-
-  try {
-    const value = await validate(req.body, constraints);
-
-    if (value) {
-      res.status(422).json({ errors: value });
-    } else {
-      next();
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+const loginValidation = [
+  check(`useremail`, 'Pease include valid email').isEmail(),
+  check(`userpassword`, 'Password*').not().isEmpty(),
+];
 
 const postValidation = async (req, res, next) => {
   const constraints = {
