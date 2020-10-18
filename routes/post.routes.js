@@ -3,15 +3,9 @@ const { ObjectID } = require("mongodb");
 const { Router } = express;
 const postRouter = Router();
 
-const {
-  preparePost,
-  protectedRoutes,
-  insertPost,
-  findOneAndUpdate,
-  postValidation,
-} = require('./index');
+const { preparePost, protectedRoutes, insertPost, findOneAndUpdate } = require('./index');
 
-postRouter.post('/post', protectedRoutes, postValidation, preparePost, async (req, res) => {
+postRouter.post('/post', protectedRoutes, preparePost, async (req, res) => {
   try {
     const postResponse = await insertPost(req.post);
 

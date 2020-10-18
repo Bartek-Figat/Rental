@@ -1,6 +1,6 @@
 const { saveUser } = require("../middleware/saveUser");
 const { preparePost } = require("../middleware/preparePost");
-const { registerValidation, loginValidation, postValidation } = require('../middleware/validation');
+const { registerValidation, loginValidation } = require('../middleware/validation');
 const { protectedRoutes } = require("../middleware/protectedRoutes");
 const {
   createLoginCredentials,
@@ -52,7 +52,6 @@ module.exports = {
   findAllPosts,
   updateOneUsers,
   findOneAndUpdate,
-  postValidation,
   insertJwt,
   findOneJwt,
   findAllJwt,

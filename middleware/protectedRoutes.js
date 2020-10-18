@@ -25,12 +25,7 @@ const protectedRoutes = async (req, res, next) => {
       return res.status(401).json({ error: "Access denied" });
     jwt.verify(token, secret,async (err, decoded) => {
       if (err) {
-        console.log(err)
-          if (findCommonElements(compareToken, originalToken) === false){
-            const blackList = Jwt.createJwtBlackList({ jwtBlackList: token });
-            await insertJwt(blackList);
-            res.status(401).json({ error: "Access denied Error" });
-          }
+            res.status(401).json({ error: 'Access denied' });
       }else{
         req.user = decoded;
       }

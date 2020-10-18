@@ -15,7 +15,7 @@ const sendEmailVerification = async (user) => {
       text: ' Node.js',
       html: `Hello.
 		Thank you for registering at localhost Please click the link below to complete yor activation
-		<a href='http://localhost:8080/activate/${authToken}'>activate link</a>`,
+		<a href='http://localhost:3000/activate/${authToken}'>activate link</a>`,
     };
     const status = await sgMail.send(msg);
 
@@ -29,7 +29,11 @@ const sendEmailVerification = async (user) => {
 const updateAccountAfterEmailConfirmation = async (token) => {
   try {
     const user = await findOneUser({ authToken: token });
+    // ! if no user
 
+    // if(!user || user === null) {
+    //    res.status(500).json({ error: 'You have entered an invalid email or password' });
+    // }
     const msg = {
       to: `${user.useremail}`,
       from: 'test@test.com',

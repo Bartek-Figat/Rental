@@ -16,11 +16,11 @@ const TokenExpired = async (req, res) => {
     };
 
     if (findCommonElements(compareToken, originalToken) === true) {
-      res.json({ msg: 'success true' });
+      res.status(200)({ msg: 'Success' });
     } else {
       const blackList = Jwt.createJwtBlackList({ jwtBlackList: token });
       await insertJwt(blackList);
-      res.json({ msg: 'success false' });
+       res.status(401).json({ error: 'Access denied' });
     }
   } catch (error) {
     console.error(`Login Error:  ${error}`);

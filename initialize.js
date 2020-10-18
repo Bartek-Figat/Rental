@@ -16,7 +16,6 @@ const initialize = () => {
   server.use(compression());
   server.use(userRouter);
   server.use(postRouter);
-  server.use((req, res, next) => TokenExpired(req, res, next));
   return server;
 };
 
