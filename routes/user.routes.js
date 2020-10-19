@@ -22,7 +22,7 @@ userRouter.post("/login", loginAccountLimiter, loginValidation, login);
 
 userRouter.get("/admin", protectedRoutes, admin);
 
-userRouter.get("/logout", TokenExpired);
+userRouter.delete('/logout', TokenExpired);
 
 userRouter.get("/activate/:token", activate);
 
