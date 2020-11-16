@@ -8,11 +8,16 @@ const dbOptions = {
   useNewUrlParser: true,
 };
 
+
+
+
+
 const insertUser = async (doc) => {
   const client = new MongoClient(dbURI, dbOptions);
   try {
     await client.connect();
     const database = client.db("test");
+    
     const collection = database.collection("new_collection");
     return await collection.insertOne(doc);
   } catch (error) {

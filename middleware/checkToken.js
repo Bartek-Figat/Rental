@@ -20,7 +20,7 @@ const TokenExpired = async (req, res) => {
     } else {
       const blackList = Jwt.createJwtBlackList({ jwtBlackList: token });
       await insertJwt(blackList);
-       res.json({ error: 'Access denied' });
+      res.json({ error: 'Access denied' });
     }
   } catch (error) {
     console.error(`Login Error:  ${error}`);

@@ -26,34 +26,34 @@ const sendEmailVerification = async (user) => {
   }
 };
 
-const updateAccountAfterEmailConfirmation = async (token) => {
+const updateAccountAfterEmailConfirmation = async (token, req, res, next) => {
   try {
     const user = await findOneUser({ authToken: token });
-    // ! if no user
 
-    // if(!user || user === null) {
-    //    res.status(500).json({ error: 'You have entered an invalid email or password' });
-    // }
-    const msg = {
-      to: `${user.useremail}`,
-      from: 'test@test.com',
-      subject: `Hello Account Activated.`,
-      text: ' Node.js',
-      html: `Your account has benne successfully activated`,
-    };
-    sgMail.send(msg);
+    if (user === null) {
+      res.status(401).json({ error: 'Account Activated' });
+    } else {
+      const msg = {
+        to: `${user.useremail}`,
+        from: 'test@test.com',
+        subject: `Hello Account Activated.`,
+        text: ' Node.js',
+        html: `Your account has benne successfully activated`,
+      };
+      sgMail.send(msg);
 
-    const confirmationEmail = await findOneAndUpdate(
-      { useremail: user.useremail },
-      {
-        $set: {
-          authToken: null,
-          isAuthenticated: true,
-        },
-      }
-    );
+      const confirmationEmail = await findOneAndUpdate(
+        { useremail: user.useremail },
+        {
+          $set: {
+            authToken: null,
+            isAuthenticated: true,
+          },
+        }
+      );
 
-    return confirmationEmail;
+      return confirmationEmail;
+    }
   } catch (error) {
     console.error(`Update Account After Email Confirmation:  ${error}`);
   }
